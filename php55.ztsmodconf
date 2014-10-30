@@ -1,0 +1,4 @@
+<IfModule !prefork.c>
+  LoadModule php55_module modules/libphp55-zts.so
+</IfModule>
+

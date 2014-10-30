@@ -1,0 +1,53 @@
+diff -ruN php-5.5.11.orig/configure php-5.5.11/configure
+--- php-5.5.11.orig/configure	2014-04-01 09:33:51.000000000 -0300
++++ php-5.5.11/configure	2014-05-12 12:04:36.000000000 -0300
+@@ -101973,7 +101973,6 @@
+ 
+ 
+ if test "$PHP_RECODE" != "no"; then
+-  test "$PHP_IMAP"  != "no" && recode_conflict="$recode_conflict imap"
+ 
+   if test -n "$MYSQL_LIBNAME"; then
+ 
+@@ -102114,9 +102113,6 @@
+     LDFLAGS=$save_old_LDFLAGS
+     ext_shared=$save_ext_shared
+ 
+-      recode_conflict="$recode_conflict mysql"
+-
+-
+ else
+ 
+     LDFLAGS=$save_old_LDFLAGS
+@@ -102128,14 +102124,8 @@
+ 
+   fi
+ 
+-  if test -n "$recode_conflict"; then
+-    as_fn_error $? "recode extension can not be configured together with:$recode_conflict" "$LINENO" 5
+-  fi
+ fi
+ 
+-
+-
+-
+ enable_shared=yes
+ enable_static=yes
+ 
+diff -ruN php-5.5.11.orig/ext/recode/config9.m4 php-5.5.11/ext/recode/config9.m4
+--- php-5.5.11.orig/ext/recode/config9.m4	2014-04-01 09:32:03.000000000 -0300
++++ php-5.5.11/ext/recode/config9.m4	2014-05-12 12:03:34.000000000 -0300
+@@ -4,13 +4,6 @@
+ 
+ dnl Check for extensions with which Recode can not work
+ if test "$PHP_RECODE" != "no"; then
+-  test "$PHP_IMAP"  != "no" && recode_conflict="$recode_conflict imap"
+-
+-  if test -n "$MYSQL_LIBNAME"; then
+-    PHP_CHECK_LIBRARY($MYSQL_LIBNAME, hash_insert, [
+-      recode_conflict="$recode_conflict mysql"
+-    ])
+-  fi
+ 
+   if test -n "$recode_conflict"; then
+     AC_MSG_ERROR([recode extension can not be configured together with:$recode_conflict])
